@@ -12,7 +12,7 @@ load_dotenv("config/.env")
 # Use DATABASE_URL from .env
 DB_URL = os.getenv("DATABASE_URL")
 
-def load_data_to_db(csv_path="/app/scripts/transformed_data.csv"):
+def load_data_to_db(csv_path="/opt/airflow/scripts/transformed_data.csv"):
     try:
         # 1. Read transformed CSV
         df = pd.read_csv(csv_path)
