@@ -1,5 +1,6 @@
 import requests
 import os
+import time
 from dotenv import load_dotenv
 
 load_dotenv("config/.env")
@@ -14,8 +15,18 @@ def fetch_stock_data(symbol="AAPL"):
     }
     response = requests.get(url, params=params)
     data = response.json()
-    return data
+
+    if "Error Message" in data:
+        print("Invalid API call - check symbol or API key.")
+        return None
+    elif "Note" in data:
+        print("Rate limit reached. Waiting 30 seconds...")
+        time.sleep(30)
+        return fetch_stock_data(symbol)
+    else:
+        return data
 
 if __name__ == "__main__":
     stock_data = fetch_stock_data("AAPL")
-    print(stock_data)
+    if stock_data:
+        print(stock_data)
