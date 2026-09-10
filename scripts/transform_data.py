@@ -8,7 +8,7 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-def transform_stock_data(raw_json_path="scripts/raw_data.json"):
+def transform_stock_data(raw_json_path="/opt/airflow/scripts/raw_data.json"):
     try:
         logging.info(f"Opening raw JSON file from {raw_json_path}")
         with open(raw_json_path, "r") as f:
@@ -60,5 +60,5 @@ if __name__ == "__main__":
         print(df.head())
 
         # Save to CSV for inspection
-        df.to_csv("scripts/transformed_data.csv", index=False)
-        logging.info("Saved transformed data to scripts/transformed_data.csv")
+        df.to_csv("/opt/airflow/scripts/transformed_data.csv", index=False)
+        logging.info("Saved transformed data to /opt/airflow/scripts/transformed_data.csv")

@@ -2,8 +2,8 @@ import sys
 import os
 from datetime import datetime, timedelta
 
-# Add /app to sys.path to allow importing modules from the /app/scripts directory
-sys.path.append('/app')
+# Add /opt/airflow to sys.path to allow importing modules from the /opt/airflow/scripts directory
+sys.path.append('/opt/airflow')
 
 from airflow import DAG
 from airflow.operators.python import PythonOperator

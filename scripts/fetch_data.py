@@ -31,6 +31,6 @@ if __name__ == "__main__":
     stock_data = fetch_stock_data("AAPL")
     if stock_data:
         print(stock_data)
-        with open("scripts/raw_data.json", "w") as f:
+        with open("/opt/airflow/scripts/raw_data.json", "w") as f:
             json.dump(stock_data, f, indent=4)
-            print("Raw JSON saved to scripts/raw_data.json")
+            print("Raw JSON saved to /opt/airflow/scripts/raw_data.json")
