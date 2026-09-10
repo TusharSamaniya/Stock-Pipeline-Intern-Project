@@ -1,6 +1,6 @@
 import sys
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Add /app to sys.path to allow importing modules from the /app/scripts directory
 sys.path.append('/app')
@@ -13,8 +13,16 @@ from scripts.fetch_data import fetch_stock_data
 from scripts.transform_data import transform_stock_data
 from scripts.load_data import load_data_to_db
 
+# Default settings applied to every task in this DAG
+default_args = {
+    "owner": "tushar",
+    "retries": 2,                          # If a task fails, try 2 more times
+    "retry_delay": timedelta(minutes=1),   # Wait 1 minute between retries
+}
+
 with DAG(
     dag_id="stock_pipeline",
+    default_args=default_args,
     start_date=datetime(2026, 9, 1),
     schedule_interval="@daily",
     catchup=False,
