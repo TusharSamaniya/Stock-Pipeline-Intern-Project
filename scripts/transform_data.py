@@ -28,16 +28,26 @@ def transform_stock_data(raw_json_path="scripts/raw_data.json"):
     # 5. Convert list of records into a Pandas DataFrame (table)
     df = pd.DataFrame(records)
 
-    # 6. Sort table by date ascending (oldest to newest)
+    # --- DATA CLEANING STEPS ---
+    # a. Drop any duplicate rows based on date
+    df.drop_duplicates(subset=["date"], inplace=True)
+
+    # b. Drop rows with missing values in crucial columns
+    df.dropna(subset=["date", "open", "high", "low", "close", "volume"], inplace=True)
+
+    # c. Sort table by date ascending (oldest to newest)
     df.sort_values("date", inplace=True)
+
+    # d. Reset index cleanly
+    df.reset_index(drop=True, inplace=True)
 
     return df
 
 if __name__ == "__main__":
     df = transform_stock_data()
-    print("--- Transformed Data Preview ---")
+    print("--- Cleaned Transformed Data Preview ---")
     print(df.head())
 
     # Save to CSV for inspection
     df.to_csv("scripts/transformed_data.csv", index=False)
-    print("\nSaved transformed data to scripts/transformed_data.csv")
+    print("\nSaved cleaned transformed data to scripts/transformed_data.csv")
