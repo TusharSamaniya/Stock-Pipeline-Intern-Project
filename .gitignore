@@ -1,0 +1,13 @@
+# Virtual Environment
+venv/
+
+# Environment Variables & Secrets
+config/.env
+.env
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Airflow logs
+logs/
