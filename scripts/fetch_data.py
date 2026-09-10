@@ -1,6 +1,7 @@
 import requests
 import os
 import time
+import json
 from dotenv import load_dotenv
 
 load_dotenv("config/.env")
@@ -30,3 +31,6 @@ if __name__ == "__main__":
     stock_data = fetch_stock_data("AAPL")
     if stock_data:
         print(stock_data)
+        with open("scripts/raw_data.json", "w") as f:
+            json.dump(stock_data, f, indent=4)
+            print("Raw JSON saved to scripts/raw_data.json")

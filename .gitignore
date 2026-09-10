@@ -5,6 +5,9 @@ venv/
 config/.env
 .env
 
+# Generated data files
+scripts/raw_data.json
+
 # Python cache files
 __pycache__/
 *.pyc
