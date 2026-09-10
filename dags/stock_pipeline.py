@@ -8,6 +8,8 @@ sys.path.append('/app')
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 
+from airflow.models import Variable
+
 # Import our pipeline functions
 from scripts.fetch_data import fetch_stock_data
 from scripts.transform_data import transform_stock_data
@@ -29,11 +31,14 @@ with DAG(
     tags=["stock_market"]
 ) as dag:
 
+    # Get the stock symbol from Airflow UI Variables (default to 'AAPL' if not set)
+    stock_symbol = Variable.get("stock_symbol", default_var="AAPL")
+
     # Task 1: Fetch
     fetch_task = PythonOperator(
         task_id="fetch_data",
         python_callable=fetch_stock_data,
-        op_kwargs={"symbol": "AAPL"}
+        op_kwargs={"symbol": stock_symbol}
     )
 
     # Task 2: Transform
