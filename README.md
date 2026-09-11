@@ -136,8 +136,9 @@ This starts:
 
 ---
 
-## 🗄️ Database Schema
+## 🗄️ Database & pgAdmin Management
 
+### 1. Database Schema
 The database table `stocks` is automatically initialized on the first startup via [schema.sql](db/schema.sql):
 
 ```sql
@@ -154,9 +155,37 @@ CREATE TABLE IF NOT EXISTS stocks (
 );
 ```
 
-You can verify the loaded records directly using `psql`:
+### 2. Accessing & Connecting pgAdmin (GUI)
+You can manage and visualize the PostgreSQL database through the web-based **pgAdmin 4** interface:
+
+1. Open your browser and go to [http://localhost:5050](http://localhost:5050).
+2. Log in with the default credentials:
+   - **Email**: `admin@admin.com`
+   - **Password**: `admin`
+3. **Register / Connect the PostgreSQL Server**:
+   - Right-click **Servers** in the left sidebar $\rightarrow$ **Register** $\rightarrow$ **Server...**
+   - Under the **General** tab:
+     - **Name**: `Airflow Postgres` (or any name you prefer)
+   - Under the **Connection** tab:
+     - **Host name/address**: `postgres` *(the Docker service name)*
+     - **Port**: `5432`
+     - **Maintenance database**: `stocks`
+     - **Username**: `airflow`
+     - **Password**: `airflow`
+   - Click **Save**.
+4. **View Loaded Stock Data**:
+   - In the left sidebar, navigate to:  
+     `Servers` $\rightarrow$ `Airflow Postgres` $\rightarrow$ `Databases` $\rightarrow$ `stocks` $\rightarrow$ `Schemas` $\rightarrow$ `public` $\rightarrow$ `Tables` $\rightarrow$ `stocks`
+   - Right-click `stocks` table $\rightarrow$ **View/Edit Data** $\rightarrow$ **All Rows** to view your pipeline's data in tabular format.
+   - Alternatively, open the **Query Tool** and run custom queries:
+     ```sql
+     SELECT * FROM stocks ORDER BY date DESC LIMIT 20;
+     ```
+
+### 3. Accessing PostgreSQL via CLI (`psql`)
+You can also query the database directly using the container command line:
 ```bash
-docker exec -it <postgres_container_name> psql -U airflow -d stocks -c "SELECT * FROM stocks ORDER BY date DESC LIMIT 10;"
+docker exec -it stock_pipeline_project-postgres-1 psql -U airflow -d stocks -c "SELECT * FROM stocks ORDER BY date DESC LIMIT 10;"
 ```
 
 ---
