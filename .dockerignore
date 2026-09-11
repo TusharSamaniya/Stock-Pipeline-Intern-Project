@@ -1,0 +1,13 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+logs/
+.git/
+.env
+config/.env
+*.json
+scripts/raw_data.json
+scripts/transformed_data.csv
